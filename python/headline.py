@@ -16,7 +16,7 @@ with open(TEMP_AUTH_FILE, "w", encoding="utf-8") as f:
 def run(playwright: Playwright) -> None:
     # --- ANTI-BLOCK CAMOUFLAGE ---
     browser = playwright.chromium.launch(
-        headless=False,
+        headless=True,
         ignore_default_args=["--enable-automation"]
     )
     
