@@ -1,0 +1,34 @@
+name: Daily Midnight Automation
+
+on:
+  schedule:
+    - cron: '0 0 * * *'  # Triggers every night at exactly 00:00 UTC
+  workflow_dispatch:     # Allows you to click a button and test it instantly
+
+jobs:
+  run-bot:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository code
+      uses: actions/checkout@v4
+
+    - name: Setup Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.10'
+
+    - name: Install dependencies
+      run: |
+        pip install playwright python-dotenv
+        # This installs the actual Chromium browser binaries needed by Playwright
+        playwright install chromium 
+
+    # --- ENVIROMENT VARIABLES FOR SECURE LOGIN ---
+    # Store your real username & password inside GitHub Settings -> Secrets and Variables -> Actions
+    - name: Run Script with Virtual Display (headless=False)
+      env:
+        NAUKRI_EMAIL: ${{ secrets.NAUKRI_EMAIL }}
+        PASSWORD: ${{ secrets.NAUKRI_PASSWORD }}
+      run: |
+        xvfb-run --server-args="-screen 0 1920x1080x24" python headline.py
