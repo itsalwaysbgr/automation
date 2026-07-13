@@ -31,4 +31,4 @@ jobs:
         NAUKRI_EMAIL: ${{ secrets.NAUKRI_EMAIL }}
         PASSWORD: ${{ secrets.NAUKRI_PASSWORD }}
       run: |
-        xvfb-run --server-args="-screen 0 1920x1080x24" python headline.py
+        xvfb-run --server-args="-screen 0 1920x1080x24" python python/headline.py
